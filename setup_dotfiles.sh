@@ -33,4 +33,3 @@ manage_file ".p10k.zsh"
 
 echo "Setup complete!"
 
-source ~/.zshrc
