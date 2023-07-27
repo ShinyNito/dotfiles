@@ -21,7 +21,7 @@ LOCAL_DIR="$HOME/.dotfiles"
 if [ -d "$LOCAL_DIR" ]; then
   echo "Updating dotfiles..."
   cd "$LOCAL_DIR"
-  git pull origin master
+  git pull origin main
 else
   echo "Cloning dotfiles..."
   git clone "$REPO_URL" "$LOCAL_DIR"
