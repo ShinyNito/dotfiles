@@ -1,0 +1,84 @@
+#!/bin/sh
+
+#判断是否安装gum
+if command -v gum &> /dev/null; then
+    exit 1
+fi
+
+# Prepare ------------------------------------------------------------------------------------------
+
+
+# 获取操作系统的内核名称
+kernel=$(uname -s)
+# 检查内核名称
+if [ "$kernel" = "Linux" ]; then
+  # 如果是 Linux 内核，使用 /etc/os-release 文件来获取操作系统名称
+  os_name=$(cat /etc/os-release | grep -oP '(?<=^NAME=")(.*)(?=")')
+  cpu_name=$(cat /proc/cpuinfo | grep "model name" | awk -F: '{print $2}' | head -1 | sed 's/^[ \t]*//')
+elif [ "$kernel" = "Darwin" ]; then
+  # 如果是 Darwin 内核，使用 sw_vers 命令来获取 macOS 的产品名称
+  os_name=$(sw_vers -productName)
+  cpu_name=$(sysctl -n machdep.cpu.brand_string)
+else
+  # 如果是其他操作系统，无法确定操作系统名称
+  os_name="Unknown"
+  cpu_name="Unknown"
+fi
+
+package_manager=$(which brew || which apt || which yum || which pacman || which dnf || which nix-env || which apk || which yumdnf)
+
+main_color=4
+
+title="  [38;5;${main_color}m [0m: [1;38;5;${main_color}m${USER}[0m@[1;38;5;${main_color}m$(hostname)[0m"
+body=$(gum style --border normal --border-foreground 7 --padding '0 1' --width 51 \
+"[38;5;${main_color}m [0m: ${os_name}
+[38;5;${main_color}m󰍛 [0m: ${cpu_name}
+[38;5;${main_color}m [0m: $(basename "${SHELL}")
+[38;5;${main_color}m [0m: $(date +"%Y-%m-%d %H:%M:%S")
+[38;5;${main_color}m神[0m: $(uptime -p | cut -c 4- | cut -d ',' -f -2)
+[38;5;${main_color}m [0m: $(basename "$package_manager")")
+info=$(gum join --vertical "${title}" "${body}")
+
+art=$(gum style '    [34m___[0m
+   [34m([0m.. [34m|[0m
+   [34m([33m<> [34m|[0m
+  [34m/ [0m__  [34m\[0m
+ [34m( [0m/  \[34m/ |[0m
+[33m_[34m/\ [0m__)[34m/[33m_[34m)[0m
+[33m\/[34m-____[33m\/[0m')
+
+color=$(gum style '[0;30m███[0;31m███[0;32m███[0;33m███[0;34m███[0;35m███[0;36m███[0;37m███[0m
+[0;1;90m███[0;1;91m███[0;1;92m███[0;1;93m███[0;1;94m███[0;1;95m███[0;1;96m███[0;1;97m███[0m')
+
+
+# Display ------------------------------------------------------------------------------------------
+
+terminal_size=$(stty size)
+terminal_height=${terminal_size% *}
+terminal_width=${terminal_size#* }
+
+prompt_height=${PROMPT_HEIGHT:-1}
+
+print_test() {
+	no_color=$(printf '%b' "${1}" | sed -e 's/\x1B\[[0-9;]*[JKmsu]//g')
+
+	[ "$(printf '%s' "${no_color}" | wc --lines)" -gt $(( terminal_height - prompt_height )) ] && return 1
+	[ "$(printf '%s' "${no_color}" | wc --max-line-length)" -gt "${terminal_width}" ] && return 1
+
+	gum style --align center --width="${terminal_width}" "${1}" ''
+	printf '%b' "\033[A"
+
+	exit 0
+}
+
+
+# Default layout
+group_info_color=$(gum join --vertical --align center "${info}" "${color}")
+print_test "$(gum join --horizontal --align center '  ' "${art}" '  ' "${group_info_color}")"
+
+# Other layout
+print_test "$(gum join --horizontal --align center '  ' "${art}" '  ' "${info}")"
+print_test "${group_info_color}"
+print_test "${info}"
+
+exit 1
