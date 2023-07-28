@@ -27,5 +27,6 @@ setopt hist_ignore_dups       # ignore duplicated commands history list
 setopt hist_ignore_space      # ignore commands that start with space
 setopt hist_verify            # show command with history expansion to user before running it
 setopt share_history          # share command history data
+export ZSH_AUTOSUGGEST_STRATEGY=(history completion)
 
 bash ~/.dotfiles/diyfetch
