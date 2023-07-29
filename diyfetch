@@ -37,7 +37,7 @@ body=$(gum style --border normal --border-foreground 7 --padding '0 1' --width 5
 [38;5;${main_color}m󰍛 [0m: ${cpu_name}
 [38;5;${main_color}m [0m: $(basename "${SHELL}")
 [38;5;${main_color}m [0m: $(date +"%Y-%m-%d %H:%M:%S")
-[38;5;${main_color}m神[0m: $(uptime -p | cut -c 4- | cut -d ',' -f -2)
+[38;5;${main_color}m神[0m: ${up_time}
 [38;5;${main_color}m [0m: $(basename "$package_manager")")
 info=$(gum join --vertical "${title}" "${body}")
 
