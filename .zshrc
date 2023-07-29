@@ -6,13 +6,12 @@ zi snippet OMZ::plugins/git/git.plugin.zsh
 zi ice depth'1' atload"[[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh" nocd
 zi light romkatv/powerlevel10k
 
-# Load other useful plugins
-
 zi ice wait lucid atinit"ZI[COMPINIT_OPTS]=-C; zicompinit; zicdreplay"
 zi light z-shell/F-Sy-H
 
 zi ice wait lucid atload"!_zsh_autosuggest_start"
 zi load zsh-users/zsh-autosuggestions
+zi light zsh-users/zsh-history-substring-search
 
 zi light agkozak/zsh-z
 
@@ -23,10 +22,13 @@ zi light agkozak/zsh-z
 # Set history options
 setopt extended_history       # record timestamp of command in HISTFILE
 setopt hist_expire_dups_first # delete duplicates first when HISTFILE size exceeds HISTSIZE
+setopt hist_ignore_all_dups   # remove older duplicate entries from the history
 setopt hist_ignore_dups       # ignore duplicated commands history list
 setopt hist_ignore_space      # ignore commands that start with space
-setopt hist_verify            # show command with history expansion to user before running it
+setopt hist_reduce_blanks     # remove superfluous blanks from history items
+setopt hist_save_no_dups      # do not write a duplicate event to the history file
+setopt inc_append_history     # allow multiple terminal sessions to append to one history
+setopt inc_append_history     # write to the history file immediately, not when the shell exits.
 setopt share_history          # share command history data
-export ZSH_AUTOSUGGEST_STRATEGY=(history completion)
 
 bash ~/.dotfiles/diyfetch
