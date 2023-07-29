@@ -1,4 +1,9 @@
 # Initialize zshell and load the git plugin
+update_dotfiles() {
+    cd ~/.dotfile  # Replace ~/.dotfile with the actual path to your git repository
+    git pull --quiet origin master
+}
+update_dotfiles
 source <(curl -sL init.zshell.dev); zzinit
 zi snippet OMZ::plugins/git/git.plugin.zsh
 
