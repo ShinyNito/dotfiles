@@ -1,7 +1,6 @@
 # Initialize zshell and load the git plugin
 update_dotfiles() {
-    cd ~/.dotfiles  # Replace ~/.dotfile with the actual path to your git repository
-    git pull --quiet origin main
+     (cd ~/.dotfiles && git pull --quiet origin main)
 }
 update_dotfiles
 source <(curl -sL init.zshell.dev); zzinit
