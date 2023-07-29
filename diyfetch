@@ -32,7 +32,7 @@ else
 fi
 
 if [ $((bodyWidth - ${#cpu_name})) -lt 0 ]; then
-    bodyWidth=${#cpu_name} + 10
+    bodyWidth=(${#cpu_name} + 10)
 fi
 
 package_manager=$(which brew || which apt || which yum || which pacman || which dnf || which nix-env || which apk || which yumdnf)
