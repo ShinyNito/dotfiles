@@ -1,6 +1,6 @@
 # Initialize zshell and load the git plugin
 update_dotfiles() {
-    cd ~/.dotfile  # Replace ~/.dotfile with the actual path to your git repository
+    cd ~/.dotfiles  # Replace ~/.dotfile with the actual path to your git repository
     git pull --quiet origin main
 }
 update_dotfiles
