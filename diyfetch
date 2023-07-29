@@ -15,10 +15,12 @@ if [ "$kernel" = "Linux" ]; then
   # 如果是 Linux 内核，使用 /etc/os-release 文件来获取操作系统名称
   os_name=$(cat /etc/os-release | grep -oP '(?<=^NAME=")(.*)(?=")')
   cpu_name=$(cat /proc/cpuinfo | grep "model name" | awk -F: '{print $2}' | head -1 | sed 's/^[ \t]*//')
+  up_time=$(uptime -p | cut -c 4- | cut -d ',' -f -2)
 elif [ "$kernel" = "Darwin" ]; then
   # 如果是 Darwin 内核，使用 sw_vers 命令来获取 macOS 的产品名称
   os_name=$(sw_vers -productName)
   cpu_name=$(sysctl -n machdep.cpu.brand_string)
+  up_time=$(uptime | awk '{print $3, $4, $5}' | tr -d ',')
 else
   # 如果是其他操作系统，无法确定操作系统名称
   os_name="Unknown"
