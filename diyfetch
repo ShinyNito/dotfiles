@@ -64,6 +64,16 @@ prompt_height=${PROMPT_HEIGHT:-1}
 print_test() {
 	no_color=$(printf '%b' "${1}" | sed -e 's/\x1B\[[0-9;]*[JKmsu]//g')
 
+  if [ "$kernel" = "Linux" ]; then
+    # 如果是 Linux 内核，使用 /etc/os-release 文件来获取操作系统名称
+    [ "$(printf '%s' "${no_color}" | wc --lines)" -gt $(( terminal_height - prompt_height )) ] && return 1
+    [ "$(printf '%s' "${no_color}" | wc --max-line-length)" -gt "${terminal_width}" ] && return 1
+  else
+    # 如果是 Darwin 内核，使用 sw_vers 命令来获取 macOS 的产品名称
+    [ "$(printf '%s' "${no_color}" | wc -l)" -gt $(( terminal_height - prompt_height )) ] && return 1
+   	[ "$(printf '%s' "${no_color}" | wc -L)" -gt "${terminal_width}" ] && return 1
+  fi
+
 	[ "$(printf '%s' "${no_color}" | wc --lines)" -gt $(( terminal_height - prompt_height )) ] && return 1
 	[ "$(printf '%s' "${no_color}" | wc --max-line-length)" -gt "${terminal_width}" ] && return 1
 
