@@ -30,5 +30,6 @@ setopt hist_save_no_dups      # do not write a duplicate event to the history fi
 setopt inc_append_history     # allow multiple terminal sessions to append to one history
 setopt inc_append_history     # write to the history file immediately, not when the shell exits.
 setopt share_history          # share command history data
-
+bindkey "$terminfo[kcuu1]" history-substring-search-up
+bindkey "$terminfo[kcud1]" history-substring-search-down
 bash ~/.dotfiles/diyfetch
