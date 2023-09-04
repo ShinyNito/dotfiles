@@ -2,6 +2,9 @@
 update_dotfiles() {
      (cd ~/.dotfiles && git pull --quiet origin main)
 }
+if [ -f ~/.profile ]; then
+    . ~/.profile
+fi
 update_dotfiles
 source <(curl -sL init.zshell.dev); zzinit
 zi snippet OMZ::plugins/git/git.plugin.zsh
