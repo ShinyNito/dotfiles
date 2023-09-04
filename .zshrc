@@ -39,4 +39,3 @@ setopt inc_append_history     # write to the history file immediately, not when 
 setopt share_history          # share command history data
 bindkey "$terminfo[kcuu1]" history-substring-search-up
 bindkey "$terminfo[kcud1]" history-substring-search-down
-bash ~/.dotfiles/diyfetch
