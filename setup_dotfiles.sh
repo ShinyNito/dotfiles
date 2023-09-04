@@ -10,33 +10,18 @@ is_installed()
   fi
 }
 
-gum_spin()
-{
-  local title=$1
-  local cmd=$2
-  gum spin --spinner dot --title "$title" -- "$cmd"
-}
-
 run_cmd()
 {
   local title=$1
   local cmd=$2
-  if is_installed "gum"; then
-    gum_spin "$title" "$cmd"
-  else
-    echo "$title"
-    eval "$cmd"
-  fi
+  echo "$title"
+  eval "$cmd"
 }
 
 tips()
 {
     local title="$1"
-    if is_installed "gum"; then
-      echo '{{ Color "2" "0" " '$title' " }}' | gum format -t template
-    else
-      echo "$title"
-    fi
+    echo "$title"
 }
 
 manage_file()
@@ -58,9 +43,9 @@ LOCAL_DIR="$HOME/.dotfiles"
 
 if [ -d "$LOCAL_DIR" ]; then
   cd "$LOCAL_DIR"
-  gum_spin "Updating dotfiles..." "git pull origin main"
+  run_cmd "Updating dotfiles..." "git pull origin main"
 else
-  gum_spin "Cloning dotfiles..." "git clone $REPO_URL $LOCAL_DIR"
+  run_cmd "Cloning dotfiles..." "git clone $REPO_URL $LOCAL_DIR"
 fi
 
 manage_file ".zshrc"
