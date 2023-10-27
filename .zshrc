@@ -2,6 +2,12 @@
 update_dotfiles() {
      (cd ~/.dotfiles && git pull --quiet origin main)
 }
+
+function _history_substring_search_config() {
+    bindkey "$terminfo[kcuu1]" history-substring-search-up
+    bindkey "$terminfo[kcud1]" history-substring-search-down
+}
+
 if [ -f ~/.profile ]; then
     . ~/.profile
 fi
@@ -20,10 +26,13 @@ zi ice wait lucid atload"!_zsh_autosuggest_start"
 zi light zsh-users/zsh-autosuggestions
 
 zi ice wait lucid
+zi ice id-as'zsh-users/zsh-history-substring-search' atload'_history_substring_search_config'
 zi light zsh-users/zsh-history-substring-search
 
-zi ice wait lucid
-zi light agkozak/zsh-z
+zi wait lucid light-mode for \
+        agkozak/zsh-z
+
+
 
 # Set up history settings
 [ -z "$HISTFILE" ] && HISTFILE="$HOME/.zsh_history"
@@ -40,5 +49,3 @@ setopt hist_save_no_dups      # do not write a duplicate event to the history fi
 setopt inc_append_history     # allow multiple terminal sessions to append to one history
 setopt inc_append_history     # write to the history file immediately, not when the shell exits.
 setopt share_history          # share command history data
-#bindkey "$terminfo[kcuu1]" history-substring-search-up
-#bindkey "$terminfo[kcud1]" history-substring-search-down
