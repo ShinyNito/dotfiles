@@ -17,9 +17,12 @@ zi ice wait lucid atinit"ZI[COMPINIT_OPTS]=-C; zicompinit; zicdreplay"
 zi light z-shell/F-Sy-H
 
 zi ice wait lucid atload"!_zsh_autosuggest_start"
-zi load zsh-users/zsh-autosuggestions
+zi light zsh-users/zsh-autosuggestions
+
+zi ice wait lucid
 zi light zsh-users/zsh-history-substring-search
 
+zi ice wait lucid
 zi light agkozak/zsh-z
 
 # Set up history settings
@@ -37,5 +40,5 @@ setopt hist_save_no_dups      # do not write a duplicate event to the history fi
 setopt inc_append_history     # allow multiple terminal sessions to append to one history
 setopt inc_append_history     # write to the history file immediately, not when the shell exits.
 setopt share_history          # share command history data
-bindkey "$terminfo[kcuu1]" history-substring-search-up
-bindkey "$terminfo[kcud1]" history-substring-search-down
+#bindkey "$terminfo[kcuu1]" history-substring-search-up
+#bindkey "$terminfo[kcud1]" history-substring-search-down
