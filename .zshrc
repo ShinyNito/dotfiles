@@ -12,7 +12,7 @@ if [ -f ~/.profile ]; then
     . ~/.profile
 fi
 update_dotfiles
-source <(curl -sL init.zshell.dev); zzinit
+source <(curl -sL https://src.zshell.dev/zsh/init.zsh); zzinit
 zi snippet OMZ::plugins/git/git.plugin.zsh
 
 # Load powerlevel10k theme if configuration file exists
